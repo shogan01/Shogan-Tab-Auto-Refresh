@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Shogan Auto Refresh</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <main>
+    <h1>Auto Refresh</h1>
+
+    <label for="targetUrl">Page URL</label>
+    <input id="targetUrl" type="url" placeholder="https://example.com/page">
+
+    <label for="interval">Refresh every</label>
+    <select id="interval">
+      <option value="5">5 seconds</option>
+      <option value="30">30 seconds</option>
+      <option value="60" selected>1 minute</option>
+      <option value="120">2 minutes</option>
+      <option value="300">5 minutes</option>
+      <option value="600">10 minutes</option>
+      <option value="custom">Custom</option>
+    </select>
+
+    <div id="customRow" class="hidden">
+      <input id="customValue" type="number" min="5" step="1" value="15">
+      <select id="customUnit">
+        <option value="1">seconds</option>
+        <option value="60">minutes</option>
+      </select>
+    </div>
+
+    <div class="status-card">
+      <div class="status-line">
+        <span>Status</span>
+        <strong id="status">Stopped</strong>
+      </div>
+      <div class="status-line">
+        <span>Next refresh</span>
+        <strong id="countdown">—</strong>
+      </div>
+    </div>
+
+    <div class="buttons">
+      <button id="start">Start</button>
+      <button id="stop" class="secondary">Stop</button>
+    </div>
+
+    <p id="message" class="message"></p>
+    <p class="note">Starting a site saves its URL and interval. Saved sites can auto-start when reopened.</p>
+
+    <section class="history-section">
+      <div class="history-header">
+        <h2>Recent Sites</h2>
+        <button id="clearHistory" class="text-button">Clear</button>
+      </div>
+      <div id="historyList" class="history-list">
+        <div class="history-empty">No saved sites yet.</div>
+      </div>
+    </section>
+  </main>
+
+  <script src="popup.js"></script>
+</body>
+</html>
