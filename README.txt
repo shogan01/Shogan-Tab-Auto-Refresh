@@ -1,4 +1,4 @@
-SHOGAN AUTO REFRESH v4.3
+SHOGAN AUTO REFRESH v4.3.1
 ========================
 
 NEW IN VERSION 4.2
@@ -30,14 +30,14 @@ INSTALL / UPDATE
 3. Remove or disable the older version.
 4. Turn on Developer mode.
 5. Click Load unpacked.
-6. Select: shogan-auto-refresh-v4.3
+6. Select the extracted folder containing manifest.json.
 7. Pin the extension if desired.
 
-Version: 4.3.0
+Version: 4.3.1
 
 
 ICON UPDATE
 -----------
 - Replaced the previous toolbar icon with a cleaner, simplified red/black refresh-S emblem.
 - Rebuilt 16, 32, 48, and 128 pixel Chrome icon assets from a higher-resolution source.
-- Applied careful high-quality downsampling and light sharpening for better toolbar clarity.
+- Bold white S with two coral refresh arrows, checked on light and dark backgrounds.
