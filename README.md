@@ -16,17 +16,19 @@ Shogan Auto Refresh was built to stay simple: choose a page, choose a timer, sta
 - Optional **Auto-start** when a saved page is opened
 - Start or stop refreshing at any time
 - Stores settings and history locally in Chrome
-- Custom Shogan red/black interface and toolbar icon
+- Compact popup with Josefin Sans countdown, light/dark appearance, and Classic design fallback
+- Reload extension directly from the popup
+- Optional **Open tab when page changes**, off by default for each page
 - No account, subscription, or external service required
 
 ## Current Version
 
-**4.3.1**
+**4.4.0**
 
 ## Installation
 
 1. Go to the latest GitHub release.
-2. Download **`Shogan-Auto-Refresh-v4.3.1.zip`** from the release assets.
+2. Download **`Shogan-Auto-Refresh-v4.4.0.zip`** from the release assets.
 3. Extract the ZIP to a permanent folder.
 4. Open Chrome and go to `chrome://extensions`.
 5. Enable **Developer mode**.

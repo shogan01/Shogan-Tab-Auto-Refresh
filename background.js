@@ -44,7 +44,7 @@ function sameTarget(a, b) {
   return normalized(a) === normalized(b);
 }
 
-async function rememberSite(targetUrl, intervalSeconds, autoStart = true) {
+async function rememberSite(targetUrl, intervalSeconds, autoStart = true, openOnChange = false) {
   const url = normalized(targetUrl);
   const history = await getHistory();
   const filtered = history.filter(item => !sameTarget(item.url, url));
@@ -53,6 +53,7 @@ async function rememberSite(targetUrl, intervalSeconds, autoStart = true) {
     url,
     intervalSeconds,
     autoStart,
+    openOnChange,
     lastUsedAt: Date.now()
   });
 
@@ -132,6 +133,53 @@ async function stopTab(tabId) {
   await removeState(tabId);
 }
 
+// Runs in the page's isolated world. Only a digest leaves the page.
+async function pageSignature() {
+  await new Promise(resolve => setTimeout(resolve, 750));
+  if (!document.body) return null;
+  const text = document.body.innerText.replace(/\s+/g, " ").trim();
+  if (!text) return null;
+  // Two independent 32-bit hashes work on HTTP pages too (no secure-context API).
+  let a = 2166136261, b = 5381;
+  for (let i = 0; i < text.length; i++) {
+    const code = text.charCodeAt(i);
+    a = Math.imul(a ^ code, 16777619);
+    b = Math.imul(b, 33) ^ code;
+  }
+  return {url: location.href, hash: `${text.length}:${a >>> 0}:${b >>> 0}`};
+}
+
+const checkingTabs = new Set();
+async function checkPageChange(tabId) {
+  if (checkingTabs.has(tabId)) return;
+  const before = await getState(tabId);
+  if (!before?.enabled || !before.openOnChange) return;
+  checkingTabs.add(tabId);
+  try {
+    const [sample] = await chrome.scripting.executeScript({target:{tabId}, func:pageSignature});
+    const result = sample?.result;
+    const current = await getState(tabId);
+    const tab = await chrome.tabs.get(tabId);
+    // Never revive stopped timers or act on a new page/session after an async read.
+    if (!current?.enabled || !current.openOnChange || current.watchId !== before.watchId ||
+        !result || !sameTarget(result.url, current.targetUrl) || !sameTarget(tab.url, current.targetUrl) || tab.status === "loading") return;
+    const changed = Boolean(current.pageHash && current.pageHash !== result.hash);
+    current.pageHash = result.hash;
+    current.changeCheckError = null;
+    await saveState(tabId, current);
+    if (changed) {
+      await chrome.tabs.update(tabId, {active:true});
+      await chrome.windows.update(tab.windowId, {focused:true});
+    }
+  } catch {
+    const current = await getState(tabId);
+    if (current?.openOnChange && current.watchId === before.watchId) {
+      current.changeCheckError = "Change detection is unavailable on this page.";
+      await saveState(tabId, current);
+    }
+  } finally { checkingTabs.delete(tabId); }
+}
+
 async function startSavedSiteIfMatched(tabId, tabUrl) {
   if (!tabUrl?.startsWith("http://") && !tabUrl?.startsWith("https://")) return false;
 
@@ -147,11 +195,14 @@ async function startSavedSiteIfMatched(tabId, tabUrl) {
     intervalSeconds: saved.intervalSeconds,
     targetUrl: normalized(saved.url),
     nextRefreshAt: null,
-    autoStarted: true
+    autoStarted: true,
+    openOnChange: saved.openOnChange === true,
+    watchId: crypto.randomUUID()
   };
 
   await saveState(tabId, state);
   await scheduleForTab(tabId, state);
+  await checkPageChange(tabId);
   return true;
 }
 
@@ -165,10 +216,12 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         intervalSeconds,
         targetUrl: normalized(targetUrl),
         nextRefreshAt: null,
-        autoStarted: false
+        autoStarted: false,
+        openOnChange: message.openOnChange === true,
+        watchId: crypto.randomUUID()
       };
 
-      await rememberSite(state.targetUrl, intervalSeconds, true);
+      await rememberSite(state.targetUrl, intervalSeconds, message.autoStart !== false, state.openOnChange);
       await saveState(tabId, state);
 
       const tab = await chrome.tabs.get(tabId);
@@ -180,7 +233,26 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       }
 
       await scheduleForTab(tabId, state);
+      await checkPageChange(tabId);
       sendResponse({ ok: true, navigating: false });
+      return;
+    }
+
+    if (message.type === "SET_OPEN_ON_CHANGE") {
+      const enabled = message.openOnChange === true;
+      const history = await getHistory();
+      const item = history.find(x => sameTarget(x.url, message.targetUrl));
+      if (item) { item.openOnChange = enabled; await saveHistory(history); }
+      const current = await getState(message.tabId);
+      if (current?.enabled && sameTarget(current.targetUrl, message.targetUrl)) {
+        current.openOnChange = enabled;
+        current.pageHash = null;
+        current.changeCheckError = null;
+        current.watchId = crypto.randomUUID();
+        await saveState(message.tabId, current);
+        await checkPageChange(message.tabId);
+      }
+      sendResponse({ok:true});
       return;
     }
 
@@ -269,6 +341,7 @@ chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
 
   if (state?.enabled && tab.url && sameTarget(tab.url, state.targetUrl)) {
     await scheduleForTab(tabId, state);
+    await checkPageChange(tabId);
     return;
   }
 

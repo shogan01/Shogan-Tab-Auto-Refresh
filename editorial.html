@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Auto Refresh</title>
+  <link rel="stylesheet" href="fonts/fonts.css">
+  <link rel="stylesheet" href="editorial.css?v=compact-2">
+  <script src="design.js"></script>
+</head>
+<body><main>
+  <header><h1>Auto refresh.</h1><span class="edition">Compact</span></header>
+  <section class="page-section" aria-label="Selected page">
+    <div class="page-heading"><div><span class="eyebrow">Page to refresh</span><p id="pageName">Choose a page</p></div><button id="editPage" class="text-button" aria-expanded="false" aria-controls="pageEditor">Edit</button></div>
+    <div id="pageEditor" class="hidden"><label for="targetUrl">Page URL</label><input id="targetUrl" type="url" placeholder="https://example.com/page"><button id="usePage" class="text-button">Use this page</button></div>
+  </section>
+  <section class="timer" aria-label="Refresh timer"><span id="status" class="eyebrow">Ready when you are</span><div id="countdown" role="timer" aria-label="Time until next refresh">01:00</div><span id="timerCaption">between refreshes</span></section>
+  <div class="interval-heading"><span>Refresh every</span><span id="intervalLabel">1 min</span></div>
+  <select id="interval" class="hidden" aria-label="Refresh interval"><option value="5">5 seconds</option><option value="30">30 seconds</option><option value="60" selected>1 minute</option><option value="120">2 minutes</option><option value="300">5 minutes</option><option value="600">10 minutes</option><option value="custom">Custom</option></select>
+  <div class="presets" role="group" aria-label="Refresh interval"><button data-interval="5" aria-pressed="false">5s</button><button data-interval="30" aria-pressed="false">30s</button><button data-interval="60" aria-pressed="true">1m</button><button data-interval="120" aria-pressed="false">2m</button><button data-interval="300" aria-pressed="false">5m</button><button data-interval="600" aria-pressed="false">10m</button><button data-interval="custom" aria-pressed="false">Custom</button></div>
+  <div id="customRow" class="hidden"><label for="customValue">Custom interval<input id="customValue" type="number" min="1" step="1" value="15"></label><label for="customUnit">Unit<select id="customUnit"><option value="1">seconds</option><option value="60">minutes</option></select></label></div>
+  <div class="buttons"><button id="start">Start refreshing <span aria-hidden="true">↗</span></button><button id="stop" class="hidden">Stop refreshing <span aria-hidden="true">■</span></button></div>
+  <label class="autostart-row main-auto"><input id="autoStart" type="checkbox" checked><span>Start automatically when reopened</span></label>
+  <label class="autostart-row"><input id="openOnChange" type="checkbox"><span>Open tab when page changes</span></label>
+  <p id="changeCheckError" class="message" role="status"></p>
+  <p id="message" class="message" role="status"></p>
+  <details class="history-section"><summary>Recent pages <span id="historyCount">0</span></summary><div class="history-header"><span>Saved pages &amp; intervals</span><button id="clearHistory" class="text-button">Clear all</button></div><div id="historyList" class="history-list"></div></details>
+  <footer><button type="button" class="text-button" data-reload-extension title="Reloads the extension and closes this popup">Reload extension</button><a href="classic/popup.html" data-design="classic">Classic design</a></footer>
+</main><script src="editorial.js"></script></body>
+</html>

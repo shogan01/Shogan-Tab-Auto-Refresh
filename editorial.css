@@ -1,0 +1,27 @@
+:root{color-scheme:light dark;font-family:'DM Sans',sans-serif;--bg:#f6f4ee;--ink:#252c29;--muted:#636c65;--line:#dadfd6;--surface:#eeeee5;--accent:#2d5b4e;--on-accent:#fff;--focus:#457c68}
+*{box-sizing:border-box}body{width:320px;margin:0;background:var(--bg);color:var(--ink)}main{padding:12px}
+header,.page-heading,.interval-heading,.history-header,footer{display:flex;align-items:center;justify-content:space-between;gap:12px}
+h1{font:italic 24px/1.1 'Instrument Serif',Georgia,serif;margin:0;letter-spacing:-.7px}
+.edition,.eyebrow{font:400 10px/1.5 'DM Mono',monospace;text-transform:uppercase;letter-spacing:1.3px;color:var(--muted)}
+.page-section{border-bottom:1px solid var(--line);padding:8px 0}.page-heading>div{min-width:0}
+#pageName{font:400 12px/1.5 'DM Mono',monospace;white-space:nowrap;text-overflow:ellipsis;overflow:hidden;max-width:240px;margin:5px 0 0}
+.timer{text-align:center;padding:10px 0}#countdown{font:400 56px/1.06 'Josefin Sans',sans-serif;letter-spacing:-2px;font-variant-numeric:tabular-nums;margin:3px 0;color:var(--ink);overflow-wrap:anywhere}#timerCaption{font-size:12px;color:var(--muted)}
+label{font-size:12px;color:var(--muted)}.interval-heading{margin-bottom:8px;font-size:12px}#intervalLabel{font:400 11px 'DM Mono',monospace;color:var(--muted)}
+button,input,select{font:inherit}button{cursor:pointer;border:1px solid var(--line);border-radius:6px;padding:9px 10px;color:var(--ink);background:transparent;font-size:12px;transition:background .12s}button:hover{background:var(--surface)}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:2px solid var(--focus);outline-offset:3px}
+.presets{display:flex;gap:5px;flex-wrap:wrap}.presets button{flex:1;padding:8px 5px;font-size:11px}.presets button[aria-pressed=true]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+input[type=url],input[type=number],select{display:block;width:100%;margin-top:6px;padding:9px 10px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink);font-size:13px}
+#pageEditor{margin-top:14px}#customRow{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}.hidden{display:none!important}
+.buttons{margin-top:9px}.buttons button{display:flex;justify-content:space-between;align-items:center;width:100%;padding:11px 13px;border:0;border-radius:7px;background:var(--accent);color:var(--on-accent);font-weight:500;font-size:14px}.buttons button:hover{filter:brightness(1.12)}
+.autostart-row{display:flex;align-items:center;gap:8px;margin-top:9px;font-size:11px}.autostart-row input{accent-color:var(--accent);margin:0;width:15px;height:15px;flex-shrink:0}.main-auto{margin:9px 0 0;font-size:12px}
+.message{font-size:12px;color:var(--muted);margin:10px 0;line-height:1.45}.message:empty{display:none}
+.history-section{border-top:1px solid var(--line);margin-top:9px;padding-top:6px}summary{cursor:pointer;font-size:13px;padding:4px 0}#historyCount{font:400 11px 'DM Mono',monospace;color:var(--muted);margin-left:6px}
+.history-header{font-size:11px;color:var(--muted);margin-top:10px}.text-button{border:0;background:transparent;color:var(--muted);padding:5px;font-size:11px}.history-list{max-height:180px;overflow-y:auto}.history-item{padding:12px 0;border-bottom:1px solid var(--line)}
+.history-top{display:flex;align-items:center;gap:8px}.history-main{flex:1;min-width:0}.history-url{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px}.history-meta{color:var(--muted);font:400 10px 'DM Mono',monospace;margin-top:5px}.history-actions{display:flex;gap:4px}.small-button{font-size:11px;padding:5px 7px}.history-empty{padding:12px 0;color:var(--muted);font-size:12px}
+footer{padding-top:6px;font-size:10px;color:var(--muted)}footer a{color:var(--muted);text-underline-offset:3px;white-space:nowrap}
+@media(prefers-color-scheme:dark){:root{--bg:#1d2522;--ink:#eeeade;--muted:#b0b9af;--line:#3c4841;--surface:#2a3530;--accent:#bcd4bf;--on-accent:#1d3027;--focus:#c3ddca}}
+@media(prefers-reduced-motion:reduce){button{transition:none}}
+
+.page-heading .eyebrow{display:none}
+#timerCaption{display:none}
+#pageName{margin:0;max-width:250px}
