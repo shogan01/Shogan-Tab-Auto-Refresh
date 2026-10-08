@@ -23,12 +23,12 @@ Shogan Auto Refresh was built to stay simple: choose a page, choose a timer, sta
 
 ## Current Version
 
-**4.4.1**
+**4.4.2**
 
 ## Installation
 
 1. Go to the latest GitHub release.
-2. Download **`Shogan-Auto-Refresh-v4.4.1.zip`** from the release assets.
+2. Download **`Shogan-Auto-Refresh-v4.4.2.zip`** from the release assets.
 3. Extract the ZIP to a permanent folder.
 4. Open Chrome and go to `chrome://extensions`.
 5. Enable **Developer mode**.
@@ -84,3 +84,6 @@ Stable versions are published through the repository's **Releases** section.
 ## Project Goal
 
 Keep automatic page refreshing straightforward, useful, and free without unnecessary complexity or subscription features.
+
+### Dropdown appearance
+Use **Previous style** in the popup footer to restore the pre-metallic compact theme. Your choice is remembered. **Metallic style** switches back, and **Classic design** remains available.
