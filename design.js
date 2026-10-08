@@ -3,7 +3,7 @@
   function applyFinish() {
     const previous = localStorage.getItem('popupFinish') === 'previous';
     const sheet = document.getElementById('popupStyle');
-    if (sheet) sheet.href = previous ? 'editorial-previous.css' : 'editorial.css?v=metallic-coral-2';
+    if (sheet) sheet.href = previous ? 'editorial-previous.css' : 'editorial.css?v=metallic-red-1';
     const button = document.getElementById('toggleFinish');
     if (button) button.textContent = previous ? 'Metallic style' : 'Previous style';
   }

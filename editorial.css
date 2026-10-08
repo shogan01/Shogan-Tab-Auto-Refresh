@@ -38,13 +38,15 @@ footer a:hover,.text-button:hover{color:#ffac9f}
 header{margin:-12px -12px 0;padding:10px 12px;background:linear-gradient(#ff9b8b,#ff7d6c 55%,#ee6859);box-shadow:inset 0 1px 0 #ffc6bb,inset 0 -1px 0 #a94035}
 header h1{color:#291510;text-shadow:none}
 header .edition{color:#50291f}
-/* Polished coral faces with a bright bevel and darker lower edge. */
-header{background:linear-gradient(115deg,transparent 25%,#fff6 40%,transparent 54%),linear-gradient(180deg,#ffd0be 0%,#ff9c82 10%,#ef7059 46%,#d74d3e 49%,#fa896b 76%,#ffb297 100%);box-shadow:inset 0 1px 0 #ffe6d9,inset 0 2px 0 #ffb19a,inset 0 -2px 0 #8f3029,0 3px 8px #0005}
-header h1{color:#301611;text-shadow:0 1px 0 #ffceba;font-weight:400}
-header .edition{color:#46231c}
+/* Deep red anodized-metal finish, inspired by the Shogan Spark reference. */
+:root{--accent:#d71b23;--on-accent:#fff4f4;--focus:#ff6570}
+header,.buttons button,.presets button[aria-pressed=true]{background:linear-gradient(115deg,transparent 32%,#ffffff12 40%,transparent 47%),linear-gradient(180deg,#ff7378 0%,#d51925 6%,#a50915 42%,#78040d 51%,#b70a16 80%,#e52b35 96%,#ff5a63 100%);color:#fff5f5;text-shadow:0 1px 2px #420006;box-shadow:inset 0 1px 0 #ffb1b5,inset 1px 0 0 #f4434e,inset -1px 0 0 #85000a,inset 0 -2px 0 #510008,0 2px 5px #0007}
+header h1{color:#fff3f3;text-shadow:0 1px 2px #480006;font-weight:400}
+header .edition{color:#ffe7e9;text-shadow:0 1px 2px #480006}
 .presets button{background:linear-gradient(180deg,#555b64 0%,#393e46 12%,#282c33 52%,#343941 100%);border-color:#515761;box-shadow:inset 0 1px 0 #858c9655,inset 0 -1px 0 #11151b,0 2px 3px #0004;color:#e9edf2}
 .presets button:hover{background:linear-gradient(#626974,#383e47);border-color:#89919d}
-.presets button[aria-pressed=true]{background:linear-gradient(115deg,transparent 20%,#fff7 40%,transparent 58%),linear-gradient(180deg,#ffcfb8 0%,#ffab8c 13%,#e56a50 48%,#d74f39 51%,#ff9b76 83%,#ffc0a0 100%);border-color:#ffb89a;color:#32150e;font-weight:500;box-shadow:inset 0 1px 0 #ffe5d3,inset 0 -2px 0 #943b27,0 2px 4px #0007,0 0 7px #ff80552b;text-shadow:0 1px 0 #ffc7a999}
-.buttons button{background:linear-gradient(115deg,transparent 28%,#fff5 43%,transparent 59%),linear-gradient(180deg,#ffc5ae 0%,#ff9b7f 12%,#f07a5e 47%,#df614b 50%,#fa9273 82%,#ffb697 100%);box-shadow:inset 0 1px 0 #ffe1ce,inset 1px 0 0 #ffb494,inset -1px 0 0 #ffb494,inset 0 -3px 0 #9d3c2d,0 3px 6px #0006;color:#301710;text-shadow:0 1px 0 #ffd2b880}
-.buttons button:hover{filter:brightness(1.08);box-shadow:inset 0 1px 0 #fff0e3,inset 0 -3px 0 #9d3c2d,0 3px 7px #0006,0 0 9px #ff805526}
+.presets button[aria-pressed=true]{background:linear-gradient(115deg,transparent 32%,#ffffff12 40%,transparent 47%),linear-gradient(180deg,#ff7378 0%,#d51925 6%,#a50915 42%,#78040d 51%,#b70a16 80%,#e52b35 96%,#ff5a63 100%);border-color:#ff5661;color:#fff5f5;font-weight:500;box-shadow:inset 0 1px 0 #ffb1b5,inset 0 -2px 0 #510008,0 2px 4px #0007}
+.buttons button:hover{filter:brightness(1.12)}
 .buttons button:active,.presets button:active{transform:translateY(1px)}
+footer a:hover,.text-button:hover{color:#ff8a92}
+header h1,header .edition,.buttons button,.presets button[aria-pressed=true]{color:#d5d9df;text-shadow:0 -1px 0 #ffffff70,0 1px 1px #20242bcc,0 2px 2px #0005}

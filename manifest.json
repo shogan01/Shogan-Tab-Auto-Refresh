@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Shogan Auto Refresh",
-  "version": "4.4.2",
+  "version": "4.4.3",
   "description": "Auto refresh saved pages in the background with history, remembered intervals, auto-start, a live toolbar countdown, and a cleaner toolbar icon.",
   "permissions": [
     "storage",
