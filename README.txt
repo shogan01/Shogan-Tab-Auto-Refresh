@@ -1,4 +1,4 @@
-SHOGAN AUTO REFRESH v4.4.0
+SHOGAN AUTO REFRESH v4.4.1
 ========================
 
 NEW IN VERSION 4.2
@@ -33,7 +33,7 @@ INSTALL / UPDATE
 6. Select the extracted folder containing manifest.json.
 7. Pin the extension if desired.
 
-Version: 4.4.0
+Version: 4.4.1
 
 
 ICON UPDATE
