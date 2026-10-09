@@ -50,3 +50,7 @@ header .edition{color:#ffe7e9;text-shadow:0 1px 2px #480006}
 .buttons button:active,.presets button:active{transform:translateY(1px)}
 footer a:hover,.text-button:hover{color:#ff8a92}
 header h1,header .edition,.buttons button,.presets button[aria-pressed=true]{color:#d5d9df;text-shadow:0 -1px 0 #ffffff70,0 1px 1px #20242bcc,0 2px 2px #0005}
+/* Keep metallic sheen without washing out small silver labels. */
+header,.buttons button,.presets button[aria-pressed=true]{background:linear-gradient(115deg,transparent 32%,#ffffff08 40%,transparent 47%),linear-gradient(180deg,#b52b35 0%,#a91522 12%,#810713 48%,#70030c 52%,#9e1420 84%,#b52b35 100%);color:#edf0f4;text-shadow:0 1px 1px #330007}
+header h1,header .edition{color:#edf0f4;text-shadow:0 1px 1px #330007}
+.buttons button:hover{filter:none;background:linear-gradient(#b52b35,#8e0b17 52%,#ac1d29)}

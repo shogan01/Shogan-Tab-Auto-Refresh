@@ -53,6 +53,13 @@ const { pathToFileURL } = require('node:url');
   await page.waitForTimeout(200);
   await page.screenshot({path:'dist/editorial-dark.png',fullPage:true});
   await page.locator('summary').click();
+  // Check text-only enlargement and WCAG text-spacing overrides together.
+  await page.addStyleTag({content:'html{font-size:200%} *{line-height:1.5!important;letter-spacing:.12em!important;word-spacing:.16em!important} p{margin-bottom:2em!important}'});
+  assert(await page.evaluate(()=>document.documentElement.scrollWidth<=380),'Enlarged text must reflow');
+  const clipped=await page.locator('button,a,label').evaluateAll(nodes=>nodes.filter(n=>n.getClientRects().length && n.scrollWidth>n.clientWidth+2).map(n=>n.textContent));
+  assert.deepEqual(clipped,[],'Enlarged controls must not clip their text');
+  await page.screenshot({path:'dist/typography-enlarged.png',fullPage:true});
+  await page.locator('head style').last().evaluate(n=>n.remove());
   await page.getByRole('button',{name:'Use',exact:true}).click();
   assert.equal(await page.locator('#intervalLabel').textContent(),'30 sec');
   await page.locator('[data-design="classic"]').click();
@@ -66,6 +73,13 @@ const { pathToFileURL } = require('node:url');
   await page.locator('[data-design="editorial"]').click();
   await page.waitForURL('**/editorial.html');
   assert.equal(await page.evaluate(()=>localStorage.getItem('popupDesign')),'editorial');
+  for (const mode of ['previous','classic']) {
+    if(mode==='previous') await page.locator('#toggleFinish').click();
+    else { await page.locator('[data-design="classic"]').click(); await page.waitForURL('**/classic/popup.html'); }
+    await page.evaluate(()=>document.documentElement.style.fontSize='200%');
+    assert(await page.evaluate(()=>document.documentElement.scrollWidth<=380),mode+' enlarged layout');
+    await page.evaluate(()=>document.documentElement.style.fontSize='');
+  }
   assert.deepEqual(errors,[]);
   console.log('Passed: presets, timer start/stop, custom minutes, history selection, fonts/layout, persistent classic fallback, return to new design.');
   await browser.close();

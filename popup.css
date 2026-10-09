@@ -205,3 +205,8 @@ button:hover {
   font-size: 12px;
   padding: 8px 0;
 }
+
+.history-empty{color:#aaa}
+button:hover{filter:none;background:#b9141b}
+button.secondary:hover,.small-button.remove:hover{background:#444}
+.text-button:hover{background:#292929}

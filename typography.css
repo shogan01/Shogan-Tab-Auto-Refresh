@@ -1,0 +1,22 @@
+/* Shared legibility and text-resizing rules; retain each theme's font families. */
+body{font-size:.875rem;line-height:1.5;max-width:100%;min-width:0}
+main{box-sizing:border-box}
+h1{font-size:1.5rem;line-height:1.25;letter-spacing:normal}
+h2{font-size:1rem}
+label,button,input,select,summary,.interval-heading,.status-line,.history-url,.main-auto{font-size:.875rem;line-height:1.5}
+.edition,.eyebrow,#pageName,#intervalLabel,#timerCaption,.autostart-row,.history-meta,.history-empty,.history-header,.text-button,.small-button,.message,.note,footer,#historyCount{font-size:.75rem;line-height:1.5}
+.edition,.eyebrow{letter-spacing:.06em}
+.timer #countdown{font-size:2.75rem;line-height:1.2;letter-spacing:-.025em;white-space:nowrap}
+.presets button{font-size:.875rem;line-height:1.5;min-width:2.5rem}
+.buttons button{font-size:.875rem;line-height:1.5}
+header,.page-heading,.interval-heading,.history-header,footer,.history-top,.history-actions{flex-wrap:wrap}
+footer{gap:4px 8px}footer a{white-space:normal}
+.page-heading>div{flex:1;min-width:0}
+#pageName,.history-url{max-width:100%;white-space:normal;overflow-wrap:anywhere;overflow:visible;text-overflow:clip}
+.history-main{min-width:8rem}.history-meta,.message{overflow-wrap:anywhere}
+#customRow{grid-template-columns:repeat(auto-fit,minmax(min(100%,8rem),1fr))}
+.buttons{grid-template-columns:repeat(auto-fit,minmax(min(100%,8rem),1fr))}
+.autostart-row{min-height:24px}.autostart-row input{flex-shrink:0}
+button,.text-button,.small-button,footer a{min-height:24px}
+.history-list{max-height:14rem}
+input::placeholder{color:var(--muted,#aaa);opacity:1}
