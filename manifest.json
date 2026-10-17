@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Shogan Auto Refresh",
-  "version": "4.4.4",
+  "version": "4.4.5",
   "description": "Auto refresh saved pages in the background with history, remembered intervals, auto-start, a live toolbar countdown, and a cleaner toolbar icon.",
   "permissions": [
     "storage",
@@ -16,10 +16,15 @@
     "default_popup": "editorial.html",
     "default_title": "Shogan Auto Refresh",
     "default_icon": {
-      "16": "icons/metal16.png",
-      "32": "icons/metal32.png",
-      "48": "icons/metal48.png",
-      "128": "icons/metal128.png"
+      "16": "icons/toolbar-v216.png",
+      "20": "icons/toolbar-v220.png",
+      "24": "icons/toolbar-v224.png",
+      "28": "icons/toolbar-v228.png",
+      "32": "icons/toolbar-v232.png",
+      "40": "icons/toolbar-v240.png",
+      "48": "icons/toolbar-v248.png",
+      "64": "icons/toolbar-v264.png",
+      "128": "icons/toolbar-v2128.png"
     }
   },
   "icons": {
