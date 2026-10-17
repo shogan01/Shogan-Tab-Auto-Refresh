@@ -87,7 +87,7 @@ function updateDisplay() {
   stopBtn.classList.toggle("hidden", !state?.enabled);
   document.getElementById("timerCaption").textContent = state?.enabled ? `Refreshing every ${formatInterval(state.intervalSeconds)}` : "between refreshes";
   if (!state?.enabled) {
-    statusEl.textContent = "Ready when you are";
+    statusEl.textContent = "Countdown:";
     countdownEl.textContent = formatRemaining(getSelectedSeconds() * 1000);
     return;
   }

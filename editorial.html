@@ -10,12 +10,12 @@
   <script src="design.js"></script>
 </head>
 <body><main>
-  <header><h1>Auto refresh.</h1><span class="edition">Compact</span></header>
+  <header style="justify-content:center;text-align:center"><h1>Auto Refresh</h1></header>
   <section class="page-section" aria-label="Selected page">
     <div class="page-heading"><div><span class="eyebrow">Page to refresh</span><p id="pageName">Choose a page</p></div><button id="editPage" class="text-button" aria-expanded="false" aria-controls="pageEditor">Edit</button></div>
     <div id="pageEditor" class="hidden"><label for="targetUrl">Page URL</label><input id="targetUrl" type="url" placeholder="https://example.com/page"><button id="usePage" class="text-button">Use this page</button></div>
   </section>
-  <section class="timer" aria-label="Refresh timer"><span id="status" class="eyebrow">Ready when you are</span><div id="countdown" role="timer" aria-label="Time until next refresh">01:00</div><span id="timerCaption">between refreshes</span></section>
+  <section class="timer" aria-label="Refresh timer"><span id="status" class="eyebrow">Countdown:</span><div id="countdown" role="timer" aria-label="Time until next refresh">01:00</div><span id="timerCaption">between refreshes</span></section>
   <div class="interval-heading"><span>Refresh every</span><span id="intervalLabel">1 min</span></div>
   <select id="interval" class="hidden" aria-label="Refresh interval"><option value="5">5 seconds</option><option value="30">30 seconds</option><option value="60" selected>1 minute</option><option value="120">2 minutes</option><option value="300">5 minutes</option><option value="600">10 minutes</option><option value="custom">Custom</option></select>
   <div class="presets" role="group" aria-label="Refresh interval"><button data-interval="5" aria-pressed="false">5s</button><button data-interval="30" aria-pressed="false">30s</button><button data-interval="60" aria-pressed="true">1m</button><button data-interval="120" aria-pressed="false">2m</button><button data-interval="300" aria-pressed="false">5m</button><button data-interval="600" aria-pressed="false">10m</button><button data-interval="custom" aria-pressed="false">Custom</button></div>
