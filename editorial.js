@@ -228,7 +228,6 @@ async function loadState() {
   }
 
   showCustomIfNeeded();
-  updateDisplay();
   await renderHistory();
   updatePage();
 

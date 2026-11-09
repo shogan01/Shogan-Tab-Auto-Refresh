@@ -320,7 +320,8 @@ chrome.alarms.onAlarm.addListener(async (alarm) => {
         return;
       }
 
-      await chrome.action.setBadgeText({ tabId, text: "↻" });
+      // Keep the numeric badge stable through the reload handoff.
+      await updateBadge(tabId);
       await chrome.tabs.reload(tabId);
     } catch {
       await stopTab(tabId);
@@ -335,6 +336,11 @@ chrome.alarms.onAlarm.addListener(async (alarm) => {
 });
 
 chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
+  if (changeInfo.status === "loading") {
+    // Navigation can reset tab-specific action presentation in the browser.
+    await updateBadge(tabId);
+    return;
+  }
   if (changeInfo.status !== "complete") return;
 
   const state = await getState(tabId);

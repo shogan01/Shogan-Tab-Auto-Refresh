@@ -3,7 +3,7 @@ const assert = require('node:assert/strict');
 const path = require('node:path');
 const { pathToFileURL } = require('node:url');
 (async () => {
-  const browser = await chromium.launch({headless:true,channel:'msedge'});
+  const browser = await chromium.launch({headless:true,...(process.env.PLAYWRIGHT_CHANNEL ? {channel:process.env.PLAYWRIGHT_CHANNEL} : {})});
   const page = await browser.newPage({viewport:{width:380,height:700},colorScheme:'light'});
   const errors=[]; page.on('pageerror',e=>errors.push(e.message));
   const base=pathToFileURL(path.resolve('.')+path.sep).href;

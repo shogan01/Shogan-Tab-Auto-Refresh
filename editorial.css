@@ -1,62 +1,553 @@
-:root{color-scheme:dark;font-family:'DM Sans',sans-serif;--bg:#202226;--ink:#f0f2f4;--muted:#b6bac1;--line:#41454b;--surface:#30343a;--accent:#ff7768;--on-accent:#251511;--focus:#ff9587}
-*{box-sizing:border-box}body{width:320px;margin:0;background:var(--bg);color:var(--ink)}main{padding:12px}
-header,.page-heading,.interval-heading,.history-header,footer{display:flex;align-items:center;justify-content:space-between;gap:12px}
-h1{font:italic 24px/1.1 'Instrument Serif',Georgia,serif;margin:0;letter-spacing:-.7px}
-.edition,.eyebrow{font:400 10px/1.5 'DM Mono',monospace;text-transform:uppercase;letter-spacing:1.3px;color:var(--muted)}
-.page-section{border-bottom:1px solid var(--line);padding:8px 0}.page-heading>div{min-width:0}
-#pageName{font:400 12px/1.5 'DM Mono',monospace;white-space:nowrap;text-overflow:ellipsis;overflow:hidden;max-width:240px;margin:5px 0 0}
-.timer{text-align:center;padding:10px 0}#countdown{font:400 56px/1.06 'Josefin Sans',sans-serif;letter-spacing:-2px;font-variant-numeric:tabular-nums;margin:3px 0;color:var(--ink);overflow-wrap:anywhere}#timerCaption{font-size:12px;color:var(--muted)}
-label{font-size:12px;color:var(--muted)}.interval-heading{margin-bottom:8px;font-size:12px}#intervalLabel{font:400 11px 'DM Mono',monospace;color:var(--muted)}
-button,input,select{font:inherit}button{cursor:pointer;border:1px solid var(--line);border-radius:6px;padding:9px 10px;color:var(--ink);background:transparent;font-size:12px;transition:background .12s}button:hover{background:var(--surface)}
-button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:2px solid var(--focus);outline-offset:3px}
-.presets{display:flex;gap:5px;flex-wrap:wrap}.presets button{flex:1;padding:8px 5px;font-size:11px}.presets button[aria-pressed=true]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
-input[type=url],input[type=number],select{display:block;width:100%;margin-top:6px;padding:9px 10px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink);font-size:13px}
-#pageEditor{margin-top:14px}#customRow{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}.hidden{display:none!important}
-.buttons{margin-top:9px}.buttons button{display:flex;justify-content:space-between;align-items:center;width:100%;padding:11px 13px;border:0;border-radius:7px;background:var(--accent);color:var(--on-accent);font-weight:500;font-size:14px}.buttons button:hover{filter:brightness(1.12)}
-.autostart-row{display:flex;align-items:center;gap:8px;margin-top:9px;font-size:11px}.autostart-row input{accent-color:var(--accent);margin:0;width:15px;height:15px;flex-shrink:0}.main-auto{margin:9px 0 0;font-size:12px}
-.message{font-size:12px;color:var(--muted);margin:10px 0;line-height:1.45}.message:empty{display:none}
-.history-section{border-top:1px solid var(--line);margin-top:9px;padding-top:6px}summary{cursor:pointer;font-size:13px;padding:4px 0}#historyCount{font:400 11px 'DM Mono',monospace;color:var(--muted);margin-left:6px}
-.history-header{font-size:11px;color:var(--muted);margin-top:10px}.text-button{border:0;background:transparent;color:var(--muted);padding:5px;font-size:11px}.history-list{max-height:180px;overflow-y:auto}.history-item{padding:12px 0;border-bottom:1px solid var(--line)}
-.history-top{display:flex;align-items:center;gap:8px}.history-main{flex:1;min-width:0}.history-url{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px}.history-meta{color:var(--muted);font:400 10px 'DM Mono',monospace;margin-top:5px}.history-actions{display:flex;gap:4px}.small-button{font-size:11px;padding:5px 7px}.history-empty{padding:12px 0;color:var(--muted);font-size:12px}
-footer{padding-top:6px;font-size:10px;color:var(--muted)}footer a{color:var(--muted);text-underline-offset:3px;white-space:nowrap}
+/* Current metallic theme. Earlier design experiments are kept in Git history. */
+:root {
+  color-scheme: dark;
+  font-family: "DM Sans", sans-serif;
+  --bg: #202226;
+  --ink: #f0f2f4;
+  --muted: #b6bac1;
+  --line: #41454b;
+  --surface: #30343a;
+}
 
-@media(prefers-reduced-motion:reduce){button{transition:none}}
+* {
+  box-sizing: border-box;
+}
 
-.page-heading .eyebrow{display:none}
-#timerCaption{display:none}
-#pageName{margin:0;max-width:250px}
+body {
+  width: 320px;
+  margin: 0px;
+  color: var(--ink);
+}
 
-/* Metallic icon palette: graphite surfaces, silver type, coral controls. */
-body{background:linear-gradient(145deg,#30343a 0%,#202226 48%,#191b1f 100%)}
-h1{color:#edf0f4;text-shadow:0 1px 1px #000}
-#countdown{color:#f0f2f5;text-shadow:0 1px 2px #111318,0 2px 5px #111318,0 4px 10px #000b}
-.presets button{background:linear-gradient(#34383e,#282b30);box-shadow:inset 0 1px 0 #ffffff0a}
-.presets button:hover{background:#41454c}
-.presets button[aria-pressed=true]{background:linear-gradient(#ff9686,#f87565);border-color:#ff9b8c;color:#291510;box-shadow:inset 0 1px 0 #ffc3b8,0 1px 3px #0004}
-.buttons button{background:linear-gradient(#ff9b8b 0%,#ff7d6c 45%,#ee6859 100%);box-shadow:inset 0 1px 0 #ffc6bb,inset 0 -2px 0 #a94035,0 2px 5px #0004;color:#291510}
-footer a:hover,.text-button:hover{color:#ffac9f}
-header{margin:-12px -12px 0;padding:10px 12px;background:linear-gradient(#ff9b8b,#ff7d6c 55%,#ee6859);box-shadow:inset 0 1px 0 #ffc6bb,inset 0 -1px 0 #a94035}
-header h1{color:#291510;text-shadow:none}
-header .edition{color:#50291f}
-/* Deep red anodized-metal finish, inspired by the Shogan Spark reference. */
-:root{--accent:#d71b23;--on-accent:#fff4f4;--focus:#ff6570}
-header,.buttons button,.presets button[aria-pressed=true]{background:linear-gradient(115deg,transparent 32%,#ffffff12 40%,transparent 47%),linear-gradient(180deg,#ff7378 0%,#d51925 6%,#a50915 42%,#78040d 51%,#b70a16 80%,#e52b35 96%,#ff5a63 100%);color:#fff5f5;text-shadow:0 1px 2px #420006;box-shadow:inset 0 1px 0 #ffb1b5,inset 1px 0 0 #f4434e,inset -1px 0 0 #85000a,inset 0 -2px 0 #510008,0 2px 5px #0007}
-header h1{color:#fff3f3;text-shadow:0 1px 2px #480006;font-weight:400}
-header .edition{color:#ffe7e9;text-shadow:0 1px 2px #480006}
-.presets button{background:linear-gradient(180deg,#555b64 0%,#393e46 12%,#282c33 52%,#343941 100%);border-color:#515761;box-shadow:inset 0 1px 0 #858c9655,inset 0 -1px 0 #11151b,0 2px 3px #0004;color:#e9edf2}
-.presets button:hover{background:linear-gradient(#626974,#383e47);border-color:#89919d}
-.presets button[aria-pressed=true]{background:linear-gradient(115deg,transparent 32%,#ffffff12 40%,transparent 47%),linear-gradient(180deg,#ff7378 0%,#d51925 6%,#a50915 42%,#78040d 51%,#b70a16 80%,#e52b35 96%,#ff5a63 100%);border-color:#ff5661;color:#fff5f5;font-weight:500;box-shadow:inset 0 1px 0 #ffb1b5,inset 0 -2px 0 #510008,0 2px 4px #0007}
-.buttons button:hover{filter:brightness(1.12)}
-.buttons button:active,.presets button:active{transform:translateY(1px)}
-footer a:hover,.text-button:hover{color:#ff8a92}
-header h1,header .edition,.buttons button,.presets button[aria-pressed=true]{color:#d5d9df;text-shadow:0 -1px 0 #ffffff70,0 1px 1px #20242bcc,0 2px 2px #0005}
-/* Keep metallic sheen without washing out small silver labels. */
-header,.buttons button,.presets button[aria-pressed=true]{background:linear-gradient(115deg,transparent 32%,#ffffff08 40%,transparent 47%),linear-gradient(180deg,#b52b35 0%,#a91522 12%,#810713 48%,#70030c 52%,#9e1420 84%,#b52b35 100%);color:#edf0f4;text-shadow:0 1px 1px #330007}
-header h1,header .edition{color:#edf0f4;text-shadow:0 1px 1px #330007}
-.buttons button:hover{filter:none;background:linear-gradient(#b52b35,#8e0b17 52%,#ac1d29)}
+main {
+  padding: 12px;
+}
 
-/* Center the countdown within the arrows; keep the status above the artwork. */
-.timer{padding:8px 0}
-main .timer #countdown{position:relative;isolation:isolate;display:grid;place-items:center;min-height:7rem;margin:0;font-size:2rem;line-height:1.2;color:#ffb0a6;text-shadow:0 1px 2px #111318,0 2px 5px #111318;}
-.timer #countdown::before{content:"";position:absolute;z-index:-2;pointer-events:none;width:7rem;height:7rem;left:50%;top:50%;transform:translate(-50%,-50%);background:url("icons/toolbar-v2128.png") center/contain no-repeat;filter:grayscale(1);opacity:.20}
-@media(forced-colors:active){.timer #countdown::before{display:none}main .timer #countdown{color:CanvasText;text-shadow:none}}
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.page-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.interval-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.history-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+h1 {
+  font: italic 24px / 1.1 "Instrument Serif", Georgia, serif;
+  margin: 0px;
+  letter-spacing: -0.7px;
+}
+
+.edition {
+  font: 400 10px / 1.5 "DM Mono", monospace;
+  text-transform: uppercase;
+  letter-spacing: 1.3px;
+  color: var(--muted);
+}
+
+.eyebrow {
+  font: 400 10px / 1.5 "DM Mono", monospace;
+  text-transform: uppercase;
+  letter-spacing: 1.3px;
+  color: var(--muted);
+}
+
+.page-section {
+  border-bottom: 1px solid var(--line);
+  padding: 8px 0px;
+}
+
+.page-heading > div {
+  min-width: 0px;
+}
+
+#pageName {
+  font: 400 12px / 1.5 "DM Mono", monospace;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.timer {
+  text-align: center;
+}
+
+#countdown {
+  font-style: normal;
+  font-variant: tabular-nums;
+  font-size-adjust: none;
+  font-language-override: normal;
+  font-kerning: auto;
+  font-optical-sizing: auto;
+  font-feature-settings: normal;
+  font-variation-settings: normal;
+  font-weight: 400;
+  font-stretch: normal;
+  font-size: 56px;
+  line-height: 1.06;
+  font-family: "Josefin Sans", sans-serif;
+  letter-spacing: -2px;
+  margin: 3px 0px;
+  overflow-wrap: anywhere;
+}
+
+#timerCaption {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+label {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.interval-heading {
+  margin-bottom: 8px;
+  font-size: 12px;
+}
+
+#intervalLabel {
+  font: 400 11px "DM Mono", monospace;
+  color: var(--muted);
+}
+
+button {
+  font: inherit;
+}
+
+input {
+  font: inherit;
+}
+
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 9px 10px;
+  color: var(--ink);
+  background: transparent;
+  font-size: 12px;
+  transition: background 0.12s;
+}
+
+button:hover {
+  background: var(--surface);
+}
+
+button:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+}
+
+a:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+}
+
+input:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+}
+
+select:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+}
+
+summary:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+}
+
+.presets {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+
+.presets button {
+  flex: 1 1 0%;
+  padding: 8px 5px;
+  font-size: 11px;
+}
+
+input[type="url"] {
+  display: block;
+  width: 100%;
+  margin-top: 6px;
+  padding: 9px 10px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--ink);
+  font-size: 13px;
+}
+
+input[type="number"] {
+  display: block;
+  width: 100%;
+  margin-top: 6px;
+  padding: 9px 10px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--ink);
+  font-size: 13px;
+}
+
+select {
+  display: block;
+  width: 100%;
+  margin-top: 6px;
+  padding: 9px 10px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--ink);
+  font-size: 13px;
+}
+
+#pageEditor {
+  margin-top: 14px;
+}
+
+#customRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.buttons {
+  margin-top: 9px;
+}
+
+.buttons button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 11px 13px;
+  border: 0px;
+  border-radius: 7px;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.autostart-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 9px;
+  font-size: 11px;
+}
+
+.autostart-row input {
+  accent-color: var(--accent);
+  margin: 0px;
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+}
+
+.main-auto {
+  margin: 9px 0px 0px;
+  font-size: 12px;
+}
+
+.message {
+  font-size: 12px;
+  color: var(--muted);
+  margin: 10px 0px;
+  line-height: 1.45;
+}
+
+.message:empty {
+  display: none;
+}
+
+.history-section {
+  border-top: 1px solid var(--line);
+  margin-top: 9px;
+  padding-top: 6px;
+}
+
+summary {
+  cursor: pointer;
+  font-size: 13px;
+  padding: 4px 0px;
+}
+
+#historyCount {
+  font: 400 11px "DM Mono", monospace;
+  color: var(--muted);
+  margin-left: 6px;
+}
+
+.history-header {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 10px;
+}
+
+.text-button {
+  border: 0px;
+  background: transparent;
+  color: var(--muted);
+  padding: 5px;
+  font-size: 11px;
+}
+
+.history-list {
+  max-height: 180px;
+  overflow-y: auto;
+}
+
+.history-item {
+  padding: 12px 0px;
+  border-bottom: 1px solid var(--line);
+}
+
+.history-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.history-main {
+  flex: 1 1 0%;
+  min-width: 0px;
+}
+
+.history-url {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 12px;
+}
+
+.history-meta {
+  color: var(--muted);
+  font: 400 10px "DM Mono", monospace;
+  margin-top: 5px;
+}
+
+.history-actions {
+  display: flex;
+  gap: 4px;
+}
+
+.small-button {
+  font-size: 11px;
+  padding: 5px 7px;
+}
+
+.history-empty {
+  padding: 12px 0px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+footer {
+  padding-top: 6px;
+  font-size: 10px;
+  color: var(--muted);
+}
+
+footer a {
+  color: var(--muted);
+  text-underline-offset: 3px;
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  button { transition: none; }
+}
+
+.page-heading .eyebrow {
+  display: none;
+}
+
+#timerCaption {
+  display: none;
+}
+
+#pageName {
+  margin: 0px;
+  max-width: 250px;
+}
+
+body {
+  background: linear-gradient(145deg, rgb(48, 52, 58) 0%, rgb(32, 34, 38) 48%, rgb(25, 27, 31) 100%);
+}
+
+h1 {
+  color: rgb(237, 240, 244);
+  text-shadow: rgb(0, 0, 0) 0px 1px 1px;
+}
+
+#countdown {
+  color: rgb(240, 242, 245);
+  text-shadow: rgb(17, 19, 24) 0px 1px 2px, rgb(17, 19, 24) 0px 2px 5px, rgba(0, 0, 0, 0.733) 0px 4px 10px;
+}
+
+header {
+  margin: -12px -12px 0px;
+  padding: 10px 12px;
+}
+
+:root {
+  --accent: #d71b23;
+  --on-accent: #fff4f4;
+  --focus: #ff6570;
+}
+
+header {
+  box-shadow: rgb(255, 177, 181) 0px 1px 0px inset, rgb(244, 67, 78) 1px 0px 0px inset, rgb(133, 0, 10) -1px 0px 0px inset, rgb(81, 0, 8) 0px -2px 0px inset, rgba(0, 0, 0, 0.467) 0px 2px 5px;
+}
+
+.buttons button {
+  box-shadow: rgb(255, 177, 181) 0px 1px 0px inset, rgb(244, 67, 78) 1px 0px 0px inset, rgb(133, 0, 10) -1px 0px 0px inset, rgb(81, 0, 8) 0px -2px 0px inset, rgba(0, 0, 0, 0.467) 0px 2px 5px;
+}
+
+header h1 {
+  font-weight: 400;
+}
+
+.presets button {
+  background: linear-gradient(rgb(85, 91, 100) 0%, rgb(57, 62, 70) 12%, rgb(40, 44, 51) 52%, rgb(52, 57, 65) 100%);
+  border-color: rgb(81, 87, 97);
+  box-shadow: rgba(133, 140, 150, 0.333) 0px 1px 0px inset, rgb(17, 21, 27) 0px -1px 0px inset, rgba(0, 0, 0, 0.267) 0px 2px 3px;
+  color: rgb(233, 237, 242);
+}
+
+.presets button:hover {
+  background: linear-gradient(rgb(98, 105, 116), rgb(56, 62, 71));
+  border-color: rgb(137, 145, 157);
+}
+
+.presets button[aria-pressed="true"] {
+  border-color: rgb(255, 86, 97);
+  font-weight: 500;
+  box-shadow: rgb(255, 177, 181) 0px 1px 0px inset, rgb(81, 0, 8) 0px -2px 0px inset, rgba(0, 0, 0, 0.467) 0px 2px 4px;
+}
+
+.buttons button:active {
+  transform: translateY(1px);
+}
+
+.presets button:active {
+  transform: translateY(1px);
+}
+
+footer a:hover {
+  color: rgb(255, 138, 146);
+}
+
+.text-button:hover {
+  color: rgb(255, 138, 146);
+}
+
+header {
+  background: linear-gradient(115deg, transparent 32%, rgba(255, 255, 255, 0.03) 40%, transparent 47%), linear-gradient(rgb(181, 43, 53) 0%, rgb(169, 21, 34) 12%, rgb(129, 7, 19) 48%, rgb(112, 3, 12) 52%, rgb(158, 20, 32) 84%, rgb(181, 43, 53) 100%);
+  color: rgb(237, 240, 244);
+  text-shadow: rgb(51, 0, 7) 0px 1px 1px;
+}
+
+.buttons button {
+  background: linear-gradient(115deg, transparent 32%, rgba(255, 255, 255, 0.03) 40%, transparent 47%), linear-gradient(rgb(181, 43, 53) 0%, rgb(169, 21, 34) 12%, rgb(129, 7, 19) 48%, rgb(112, 3, 12) 52%, rgb(158, 20, 32) 84%, rgb(181, 43, 53) 100%);
+  color: rgb(237, 240, 244);
+  text-shadow: rgb(51, 0, 7) 0px 1px 1px;
+}
+
+.presets button[aria-pressed="true"] {
+  background: linear-gradient(115deg, transparent 32%, rgba(255, 255, 255, 0.03) 40%, transparent 47%), linear-gradient(rgb(181, 43, 53) 0%, rgb(169, 21, 34) 12%, rgb(129, 7, 19) 48%, rgb(112, 3, 12) 52%, rgb(158, 20, 32) 84%, rgb(181, 43, 53) 100%);
+  color: rgb(237, 240, 244);
+  text-shadow: rgb(51, 0, 7) 0px 1px 1px;
+}
+
+header h1 {
+  color: rgb(237, 240, 244);
+  text-shadow: rgb(51, 0, 7) 0px 1px 1px;
+}
+
+header .edition {
+  color: rgb(237, 240, 244);
+  text-shadow: rgb(51, 0, 7) 0px 1px 1px;
+}
+
+.buttons button:hover {
+  filter: none;
+  background: linear-gradient(rgb(181, 43, 53), rgb(142, 11, 23) 52%, rgb(172, 29, 41));
+}
+
+.timer {
+  padding: 8px 0px;
+}
+
+main .timer #countdown {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  place-items: center;
+  min-height: 7rem;
+  margin: 0px;
+  font-size: 2rem;
+  line-height: 1.2;
+  color: rgb(255, 176, 166);
+  text-shadow: rgb(17, 19, 24) 0px 1px 2px, rgb(17, 19, 24) 0px 2px 5px;
+}
+
+.timer #countdown::before {
+  content: "";
+  position: absolute;
+  z-index: -2;
+  pointer-events: none;
+  width: 7rem;
+  height: 7rem;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background: url("icons/toolbar-v2128.png") center center / contain no-repeat;
+  filter: grayscale(1);
+  opacity: 0.2;
+}
+
+@media (forced-colors: active) {
+  .timer #countdown::before { display: none; }
+  main .timer #countdown { color: canvastext; text-shadow: none; }
+}
